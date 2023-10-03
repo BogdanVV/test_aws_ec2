@@ -12,7 +12,7 @@ func main() {
 	r := chi.NewRouter()
 	r.Use(middleware.Logger)
 	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte("welcome"))
+		w.Write([]byte("qweasd"))
 	})
 	r.Get("/health", checkHealth)
 	http.ListenAndServe(":9999", r)
@@ -20,7 +20,7 @@ func main() {
 
 func checkHealth(w http.ResponseWriter, r *http.Request) {
 	responseBody := map[string]string{
-		"data": "api is ok!",
+		"data": "api is ok",
 	}
 
 	responseJSON, err := json.Marshal(responseBody)
