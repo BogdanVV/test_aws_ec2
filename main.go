@@ -1,17 +1,34 @@
 package main
 
 import (
+	"encoding/json"
 	"net/http"
 
-	"github.com/gin-gonic/gin"
+	"github.com/go-chi/chi/v5"
+	"github.com/go-chi/chi/v5/middleware"
 )
 
 func main() {
-	r := gin.Default()
-
-	r.GET("/", func(c *gin.Context) {
-		c.JSON(http.StatusOK, "it works!")
+	r := chi.NewRouter()
+	r.Use(middleware.Logger)
+	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
+		w.Write([]byte("welcome"))
 	})
+	r.Get("/health", checkHealth)
+	http.ListenAndServe(":9999", r)
+}
 
-	r.Run(":9999")
+func checkHealth(w http.ResponseWriter, r *http.Request) {
+	responseBody := map[string]string{
+		"data": "api is ok!",
+	}
+
+	responseJSON, err := json.Marshal(responseBody)
+	if err != nil {
+		http.Error(w, "smth is terribly wrong", http.StatusInternalServerError)
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+	w.Write(responseJSON)
 }
