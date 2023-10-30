@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 
 	"github.com/go-chi/chi/v5"
@@ -15,6 +16,7 @@ func main() {
 		w.Write([]byte("qweasd"))
 	})
 	r.Get("/health", checkHealth)
+	fmt.Println("Running server on port 9999")
 	http.ListenAndServe(":9999", r)
 }
 

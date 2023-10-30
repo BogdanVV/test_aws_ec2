@@ -1,4 +1,8 @@
 # air
 tmp
 
+# env
 .env
+
+# binary
+test_aws_ec2
