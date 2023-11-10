@@ -1,23 +1,21 @@
-package main
+package server
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 )
 
-func main() {
+func (*Server) InitRoutes() *chi.Mux {
 	r := chi.NewRouter()
 	r.Use(middleware.Logger)
 	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte("qweasd"))
 	})
 	r.Get("/health", checkHealth)
-	fmt.Println("Running server on port 9999")
-	http.ListenAndServe(":9999", r)
+	return r
 }
 
 func checkHealth(w http.ResponseWriter, r *http.Request) {
